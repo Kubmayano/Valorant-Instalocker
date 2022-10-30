@@ -27,6 +27,6 @@ class Instalock
 
     static void Main(string[] args)
     {
-        Vector2 cords = new Vector2();
+        
     }
 }
