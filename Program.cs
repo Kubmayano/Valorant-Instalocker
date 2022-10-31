@@ -1,11 +1,22 @@
 ﻿using System.Runtime.InteropServices;
+using System.Windows.Input;
+using System.Threading;
 
 class Instalock
 {
-    class Cursor //Class for moving cursor to set X and Y position
+    class Cursor //Class for moving cursor to set X and Y position and clicking
     {
         [DllImport("User32.Dll")]
         public static extern long SetCursorPos(int x, int y);
+        [DllImport("User32.Dll")]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, UIntPtr dwExtraInfo);
+
+        private const uint MOUSEEVENTF_LEFTDOWN = 0x02;
+
+        public static void LeftClick()
+        {
+            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);
+        }
     }
 
     class Vector2 //Class for storing x and y values in single variable
@@ -54,15 +65,7 @@ class Instalock
     {
         Console.WriteLine("Enter agent name: ");
         string agent = Console.ReadLine().ToUpper();
-
         if (String.IsNullOrEmpty(agent)) throw new Exception("Agent name cannot be empty");
-
-        for (int i = 0; i < 100; i++)
-        {
-            Cursor.SetCursorPos(cords[agent].x, cords[agent].y);
-            Thread.Sleep(1);
-            Cursor.SetCursorPos(cords["LOCK"].x, cords["LOCK"].y);
-            Thread.Sleep(1);
-        }
+        //rest is not implemented btw        
     }
 }
